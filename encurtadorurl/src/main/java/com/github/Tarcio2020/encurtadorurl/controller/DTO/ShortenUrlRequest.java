@@ -4,7 +4,6 @@ public class ShortenUrlRequest {
     private String url;
 
     public ShortenUrlRequest() {
-        // Construtor padrão
     }
 
     public ShortenUrlRequest(String url) {

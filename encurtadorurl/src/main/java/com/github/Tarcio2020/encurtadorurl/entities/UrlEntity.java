@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class UrlEntity {
     
     @Id
-    private String id; // Alterado para String
+    private String id; 
     private String fullUrl;
     private LocalDateTime expiresAt;
     
@@ -20,16 +20,16 @@ public class UrlEntity {
     }
 
     public UrlEntity(String id, String fullUrl, LocalDateTime expiresAt) {
-        this.id = id; // Usar id como String
+        this.id = id; 
         this.fullUrl = fullUrl;
         this.expiresAt = expiresAt;
     }
 
-    public String getId() { // Alterado para String
+    public String getId() { 
         return id;
     }
 
-    public void setId(String id) { // Alterado para String
+    public void setId(String id) { 
         this.id = id;
     }
 
