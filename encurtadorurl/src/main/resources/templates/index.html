@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encurtador de URL</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Encurtador de URL</h1>
+        <input type="text" id="urlInput" placeholder="Cole a URL que deseja encurtar">
+        <button id="shortenBtn">Encurtar</button>
+        <div id="result" class="result"></div>
+        <div id="allUrlsResult" class="all-urls-result"></div> <!-- Div para exibir todas as URLs -->
+    </div>
+
+    <script src="/js/script.js"></script>
+    <script>
+    document.getElementById('shortenBtn').addEventListener('click', function() {
+        const urlInput = document.getElementById('urlInput').value;
+        const resultDiv = document.getElementById('result');
+
+        if (!urlInput) {
+            resultDiv.textContent = 'Por favor, insira uma URL.';
+            return;
+        }
+
+        fetch('http://localhost:8080/shorten-url', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: urlInput }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao encurtar a URL');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.redirectUrl) {
+                const id = data.redirectUrl.split('/').pop(); 
+                const fullUrl = `http://localhost:8080/${id}`;
+                resultDiv.textContent = `URL encurtada: ${fullUrl}`;
+            } else {
+                resultDiv.textContent = 'URL encurtada não foi encontrada.';
+            }
+        })
+        .catch(error => {
+            resultDiv.textContent = `Erro: ${error.message}`;
+        });
+    });
+
+
+    </script>
+</body>
+</html>
+
